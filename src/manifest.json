@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "author": "yuto",
+  "name": "MyKONAN AutoBackup",
+  "version": "1.0.0.0",
+  "description": "MyKONANで強制ログアウトされた場合に，入力内容を自動保存・復元するChrome拡張機能です．",
+  "permissions": [
+    "contextMenus"
+  ],
+  "icons": {
+    "128": "./logo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://spoon.adm.konan-u.ac.jp/uprx/up/*"
+      ],
+      "js": [
+        "./jquery.js",
+        "./core.js",
+        "./content.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "./background.js"
+  }
+}
