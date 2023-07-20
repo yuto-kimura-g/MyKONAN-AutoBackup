@@ -31,7 +31,7 @@ window.onload = () => {
       });
       console.log("cn: download data:", downloadDataJsonObj);
       if (window.confirm("復元したデータをJSONファイルでダウンロードしますか？")) {
-        const downloadDataJsonStr = JSON.stringify(downloadDataJsonObj);
+        const downloadDataJsonStr = JSON.stringify(downloadDataJsonObj, null, 2);
         const aEle = document.createElement("a");
         const fileObj = new Blob(
           [downloadDataJsonStr], { type: "application/json" }
