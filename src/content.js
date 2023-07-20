@@ -21,7 +21,7 @@ window.onload = () => {
   // GET Message from './background.js'
   // show recovery data
   chrome.runtime.onMessage.addListener((msg) => {
-    if (msg.from == "backgroundJS") {
+    if (msg.from === "backgroundJS") {
       const downloadDataJsonObj = {};
       Object.keys(lStorage).forEach((recoveryKey) => {
         if (recoveryKey.startsWith(backupKeyPrefix)) {
@@ -32,6 +32,7 @@ window.onload = () => {
       console.log("cn: download data:", downloadDataJsonObj);
       if (window.confirm("復元したデータをJSONファイルでダウンロードしますか？")) {
         const downloadDataJsonStr = JSON.stringify(downloadDataJsonObj, null, 2);
+        // TODO: jsonをkeyでソートしたい
         const aEle = document.createElement("a");
         const fileObj = new Blob(
           [downloadDataJsonStr], { type: "application/json" }
@@ -46,12 +47,13 @@ window.onload = () => {
   });
 
 
-  //handle click event
-  // TODO: さすがに全部のクリックに反応してたらうざい
-  // 必要なクリックを見極めたい．
+  // handle click event
   document.addEventListener("click", function backup() {
-    const jsonData = collectData();  // 現在入力途中のデータを取得
+    // 現在入力途中のデータを取得．
+    // collectData()とその内部で呼ばれる関数はsrc/core.jsで実装している．
+    const jsonData = collectData();
     console.log("cn: json:", jsonData);
+    // TODO: jsonDataのvalueが全て空の場合も処理をskipしたい
     if (jsonData === "[]") {
       console.log("cn: data is empty");
       return;
